@@ -1,5 +1,4 @@
 import { Network } from '@xchainjs/xchain-client'
-import { ThorchainAMM } from '@xchainjs/xchain-thorchain-amm'
 import { type QuoteSwapParams, ThorchainQuery, type TxDetails } from '@xchainjs/xchain-thorchain-query'
 import {
   CryptoAmount,
@@ -12,7 +11,6 @@ import {
   isTradeAsset,
   register9Rheader,
 } from '@xchainjs/xchain-util'
-import { Wallet } from '@xchainjs/xchain-wallet'
 import axios from 'axios'
 import { ethers } from "ethers";
 import {
@@ -69,6 +67,8 @@ const delayedLog = async (message: string, delayMs: number) => {
  */
 export const doSingleSwap = async (provider: ethers.providers.Web3Provider, destinationAddress: string, amount: number, decimals: number, fromAssetRaw: string, toAssetRaw: string) => {
   try {
+    const { ThorchainAMM } = await import('@xchainjs/xchain-thorchain-amm');
+    const { Wallet } = await import('@xchainjs/xchain-wallet');
     const ethClient = new EthClient({
       ...defaultEthParams,
       network: Network.Mainnet,

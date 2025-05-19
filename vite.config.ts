@@ -9,6 +9,7 @@ export default defineConfig({
 		dependencies: [
 			'safe-buffer',
 			'buffer',
+			'coininfo',
 		],
 	})],
 	define: {
