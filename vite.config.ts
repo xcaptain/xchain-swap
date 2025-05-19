@@ -14,6 +14,7 @@ export default defineConfig({
 	})],
 	define: {
 		'process.env': {
+			ANKR_API_KEY: '',
 			ETHERSCAN_API_KEY: '', // because this is hardcoded in xchainlib
 		},
 		'process.version': JSON.stringify('v23.10.0'),
