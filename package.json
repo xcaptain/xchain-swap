@@ -26,6 +26,7 @@
 		"@xchainjs/xchain-thorchain-query": "^2.0.1",
 		"@xchainjs/xchain-util": "^2.0.0",
 		"@xchainjs/xchain-wallet": "^2.0.4",
+		"buffer": "^6.0.3",
 		"daisyui": "^5.0.35",
 		"ethers": "^5.7.2",
 		"svelte": "^5.0.0",
@@ -33,6 +34,7 @@
 		"tailwindcss": "^4.0.0",
 		"typescript": "^5.0.0",
 		"vite": "^6.0.0",
+		"vite-plugin-cjs-interop": "^2.2.0",
 		"vite-plugin-node-polyfills": "^0.23.0"
 	}
 }

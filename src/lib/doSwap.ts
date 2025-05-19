@@ -14,7 +14,11 @@ import {
 } from '@xchainjs/xchain-util'
 import { Wallet } from '@xchainjs/xchain-wallet'
 import axios from 'axios'
-
+import { ethers } from "ethers";
+import {
+  Client as EthClient,
+  defaultEthParams,
+} from "@xchainjs/xchain-ethereum";
 
 register9Rheader(axios)
 
@@ -63,8 +67,20 @@ const delayedLog = async (message: string, delayMs: number) => {
 /**
  * From asset to asset with no Affiliate address on testnet
  */
-export const doSingleSwap = async (wallet: Wallet, destinationAddress: string, amount: number, decimals: number, fromAssetRaw: string, toAssetRaw: string) => {
+export const doSingleSwap = async (provider: ethers.providers.Web3Provider, destinationAddress: string, amount: number, decimals: number, fromAssetRaw: string, toAssetRaw: string) => {
   try {
+    const ethClient = new EthClient({
+      ...defaultEthParams,
+      network: Network.Mainnet,
+      providers: {
+        [Network.Mainnet]: provider,
+        [Network.Stagenet]: provider,
+        [Network.Testnet]: provider,
+      },
+    });
+    const wallet = new Wallet({
+      ETH: ethClient,
+    });
     const tcAmm = new ThorchainAMM(new ThorchainQuery(), wallet)
 
     const fromAsset = assetFromString(fromAssetRaw)!;

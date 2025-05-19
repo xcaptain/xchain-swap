@@ -1,8 +1,7 @@
 <script lang="ts">
-    import { onMount } from "svelte";
     import { estimateSwap } from "$lib/estimateSwap";
-    // 导入ethers
     import { ethers } from "ethers";
+    import { doSingleSwap } from "$lib/doSwap";
 
     let sourceAmount = $state(0);
     let estimatedReceived = $state("");
@@ -173,6 +172,40 @@
     // 清除目标地址
     function clearDestinationAddress() {
         destinationAddress = "";
+    }
+
+    async function handleSwap() {
+        if (!walletConnected) {
+            alert("请先连接钱包");
+            return;
+        }
+
+        if (!sourceAmount || !destinationAddress) {
+            alert("请输入金额和目标地址");
+            return;
+        }
+
+        // 这里可以添加实际的交换逻辑
+        console.log("开始交换:", {
+            sourceAmount,
+            sourceAsset,
+            destinationAsset,
+            destinationAddress,
+        });
+
+        // 创建与v5兼容的provider和signer
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+        // const { Client: EthClient } = await import('@xchainjs/xchain-ethereum');
+
+        await doSingleSwap(
+            provider,
+            destinationAddress,
+            sourceAmount,
+            18,
+            sourceAsset,
+            destinationAsset,
+        );
     }
 </script>
 
@@ -455,7 +488,7 @@
                 {/if}
             </button>
 
-            <button class="btn btn-secondary w-full py-3 rounded-lg">
+            <button class="btn btn-secondary w-full py-3 rounded-lg" onclick={handleSwap}>
                 确认交换
             </button>
         </div>
